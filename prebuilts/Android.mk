@@ -1,21 +1,8 @@
 LOCAL_PATH := $(call my-dir)
 
+define prebuilt_module
 include $(CLEAR_VARS)
-LOCAL_MODULE := SoundPickerPrebuilt
-LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := $(LOCAL_MODULE)/$(LOCAL_MODULE).apk
-LOCAL_CERTIFICATE := PRESIGNED
-LOCAL_MODULE_CLASS := APPS
-LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
-LOCAL_DEX_PREOPT := false
-LOCAL_PRIVILEGED_MODULE := true
-LOCAL_PRODUCT_MODULE := true
-LOCAL_OVERRIDES_PACKAGES := SoundPicker
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := GalleryGoPrebuilt
-LOCAL_OVERRIDES_PACKAGES := Gallery2
+LOCAL_MODULE := $(1)
 LOCAL_MODULE_TAGS := optional
 LOCAL_SRC_FILES := $(LOCAL_MODULE)/$(LOCAL_MODULE).apk
 LOCAL_CERTIFICATE := PRESIGNED
@@ -23,40 +10,12 @@ LOCAL_MODULE_CLASS := APPS
 LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
 LOCAL_DEX_PREOPT := false
 LOCAL_PRODUCT_MODULE := true
+LOCAL_OVERRIDES_PACKAGES := $(2)
 include $(BUILD_PREBUILT)
+endef
 
-include $(CLEAR_VARS)
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE := ViaPrebuilt
-LOCAL_SRC_FILES := $(LOCAL_MODULE)/$(LOCAL_MODULE).apk
-LOCAL_CERTIFICATE := PRESIGNED
-LOCAL_MODULE_CLASS := APPS
-LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
-LOCAL_OVERRIDES_PACKAGES := Browser2
-LOCAL_DEX_PREOPT := false
-LOCAL_PRODUCT_MODULE := true
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE := TouchGesturesPrebuilt
-LOCAL_SRC_FILES := TouchGesturesPrebuilt/TouchGestures.apk
-LOCAL_CERTIFICATE := PRESIGNED
-LOCAL_MODULE_CLASS := APPS
-LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
-LOCAL_OVERRIDES_PACKAGES := TouchGestures.apk
-LOCAL_DEX_PREOPT := false
-LOCAL_PRODUCT_MODULE := true
-include $(BUILD_PREBUILT)
-
-include $(CLEAR_VARS)
-LOCAL_MODULE := SimpleGalleryPrebuilt
-LOCAL_OVERRIDES_PACKAGES := Gallery2 GalleryGoPrebuilt
-LOCAL_MODULE_TAGS := optional
-LOCAL_SRC_FILES := $(LOCAL_MODULE)/$(LOCAL_MODULE).apk
-LOCAL_CERTIFICATE := PRESIGNED
-LOCAL_MODULE_CLASS := APPS
-LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
-LOCAL_DEX_PREOPT := false
-LOCAL_PRODUCT_MODULE := true
-include $(BUILD_PREBUILT)
+$(eval $(call prebuilt_module, SoundPickerPrebuilt, SoundPicker))
+$(eval $(call prebuilt_module, GalleryGoPrebuilt, Gallery2))
+$(eval $(call prebuilt_module, ViaPrebuilt, Browser2))
+$(eval $(call prebuilt_module, TouchGesturesPrebuilt, TouchGestures))
+$(eval $(call prebuilt_module, SimpleGalleryPrebuilt, Gallery2))
